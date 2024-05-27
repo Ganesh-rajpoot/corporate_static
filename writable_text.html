@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Letter by Letter Writing</title>
+    <style>
+        #textContainer {
+            font-size: 20px;
+            width: 300px;
+            height: 50px;
+            font-family: monospace;
+            border: 1px solid #ccc;
+            padding: 10px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .cursor {
+            display: inline-block;
+            background-color: black;
+            width: 3px;
+            height: 1em;
+            animation: blink 1s step-start infinite;
+            vertical-align: bottom;
+            margin-left: 2px;
+        }
+
+        @keyframes blink {
+            50% {
+                background-color: transparent;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Interactive Letter by Letter Writing Example</h1>
+    
+    <!-- Container for the text and cursor -->
+    <div id="textContainer">
+        <span id="editableText"></span>
+        <span class="cursor"></span>
+    </div>
+    
+    <script>
+        const textToWrite = "This is a sample text.";
+        let currentIndex = 0;
+
+        function writeLetter() {
+            if (currentIndex < textToWrite.length) {
+                document.getElementById('editableText').textContent += textToWrite[currentIndex];
+                currentIndex++;
+                setTimeout(writeLetter, 100); // Call writeLetter every 1000ms (1 second)
+            } else {
+                // After the entire text is written, clear the text box and restart
+                setTimeout(() => {
+                    clearText();
+                    writeLetter();
+                }, 1000); // Wait 1 second before restarting
+            }
+        }
+
+        function clearText() {
+            document.getElementById('editableText').textContent = '';
+            currentIndex = 0;
+        }
+
+        function startWriting() {
+            clearText();
+            writeLetter();
+        }
+
+        // Start the writing process automatically when the page loads
+        window.onload = startWriting;
+    </script>
+</body>
+</html>
